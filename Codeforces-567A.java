@@ -1,33 +1,47 @@
-
-
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
-import static java.lang.Integer.max;
+public class Solution {
+    static class City {
+        int x;
+        int min;
+        int max;
 
-public class Main{
+        public City(int x) {
+            this.x = x;
+        }
+
+        @Override
+        public String toString() {
+            return this.min + " " + this.max;
+        }
+    }
+
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+        Solution solution = new Solution();
+        Scanner s = new Scanner(System.in);
+        int n = s.nextInt();
+        ArrayList<City> cities = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            cities.add(new City(s.nextInt()));
+        }
+        s.close();
 
-        int n=in.nextInt();
-        int[] city = new int[n];
+        City c0 = cities.get(0);
+        c0.min = Math.abs(cities.get(1).x - c0.x);
+        City cn = cities.get(n - 1);
+        cn.min = Math.abs(cn.x - cities.get(n - 2).x);
 
         for(int i=0; i<n; i++){
-            city[i]=in.nextInt();
-        }
-        for (int i=0; i<n; i++) {
-            if(i==0) {
-                System.out.println((city[1]-city[0])+" " +(city[n-1]-city[0]));
-            }else if(i==n-1){
-                System.out.println((city[n-1]-city[n-2])+" "+(city[n-1]-city[0]));
-            }else{
-                int min = city[i+1]-city[i], min2=city[i]-city[i-1];
-                int m =Math.min(min,min2);
-                int max=city[n-1]-city[i],max2=city[i]-city[0];
-                int ma = Math.max(max,max2);
-                System.out.println(m+" "+ma);
+            City current = cities.get(i);
+            current.max = Math.max( Math.abs(current.x - c0.x),Math.abs(current.x - cn.x) );
+            if(i!=0 && i!=n-1){
+                current.min = Math.min( Math.abs(current.x - cities.get(i+1).x),Math.abs(current.x -cities.get(i-1).x));
             }
         }
-
-        in.close();
+        for(var city: cities){
+            System.out.println(city.toString());
+        }
     }
 }
