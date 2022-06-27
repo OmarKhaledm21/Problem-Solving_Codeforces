@@ -1,36 +1,33 @@
-
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-
-public class Main{
+public class Solution {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-
-        int n= in.nextInt();
-        String letter = in.next().toLowerCase();
-        boolean[] ascii = new boolean[123];
-
-        for(int i=0; i<letter.length(); i++){
-            ascii[(int)letter.charAt(i)]=true;
+        int n = in.nextInt();
+        String str = in.next();
+        in.close();
+        if(n<26){
+            System.out.println("NO");
+            return;
         }
 
-        boolean c2=true;
+        int[] alpha = new int[123];
+        str = str.toLowerCase();
 
-        for(int i=97; i<=122; i++){
-            if(ascii[i]==false){
-                c2=false;
-                break;
+        int count = 0;
+        for(int i=0; i<n; i++){
+            int ascii = str.charAt(i);
+            if(alpha[ascii]!=1){
+                alpha[ascii] = 1;
+                count++;
             }
         }
 
-        if(c2){
+        if(count==26) {
             System.out.println("YES");
         }else{
             System.out.println("NO");
         }
-        in.close();
     }
 }

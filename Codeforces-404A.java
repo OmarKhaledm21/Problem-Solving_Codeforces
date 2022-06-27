@@ -1,76 +1,46 @@
+
 import java.util.Scanner;
 
-public class Main{
+public class Solution {
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        char target_letter='\0';
+        char other_letter='\0';
+        int target_i = 0, target_j = n - 1;
+        boolean mid = false;
 
-        int n = in.nextInt();
-        char[][] exam = new char[n][n];
-        for(int i=0; i<n; i++){
-            String whole=in.next();
-            for(int j=0; j<n; j++) {
-                exam[i][j] = whole.charAt(j);
-            }
-        }
-
-        char d=' ',d2=' ';
-        int x=0,y=n-1,count=0;
-        if(exam[0][x]==exam[0][y]){
-            d=exam[0][x];
-        }
-        if(exam[0][x+1]==exam[0][y-1]){
-            d2=exam[0][x+1];
-        }
-        for(int i=0; i<n; i++){
-            for(int v=0; v<n; v++){
-                if(exam[i][v]==d){
-                    count++;
-                }
-            }
-
-            if(count>2){
-                System.out.println("NO");
-                return;
-            }else{
-                count=0;
-            }
-
-            for(int v=0; v<n; v++){
-                if(exam[i][v]==d2){
-                    count++;
-                }
-            }
-
-            if(count<n-2 && x!=y){
-                System.out.println("NO");
-                return;
-            }else if(count<n-1 && x==y){
-                System.out.println("NO");
-                return;
-            }else{
-                count=0;
-            }
-
-            if(exam[i][x] == exam[i][y] && x!=y) {
-                x++;
-                y--;
-            }else if(x==y) {
-                if (exam[i - 1][x - 1] == exam[i][x]) {
-                    x++;
-                    y--;
-                } else{
+        for (int i = 0; i < n; i++) {
+            String line = sc.next();
+            if(i==0){
+                target_letter = line.charAt(0);
+                other_letter= line.charAt(1);
+                if(target_letter == other_letter){
                     System.out.println("NO");
                     return;
                 }
+            }
+            char ti=line.charAt(target_i),tj=line.charAt(target_j);
+            for(int k=0; k<n; k++){
+                char curr = line.charAt(k);
+                if(curr == ti || curr == tj){
+                    continue;
+                }
+                if(curr!= other_letter){
+                    System.out.println("NO");
+                    return;
+                }
+            }
+            if(ti == target_letter && tj == target_letter){
+                target_i++;
+                target_j--;
             }else{
                 System.out.println("NO");
                 return;
             }
+
         }
-
-
         System.out.println("YES");
-
-        in.close();
+        sc.close();
     }
 }
